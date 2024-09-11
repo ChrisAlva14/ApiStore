@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace ApiStore.Models;
 
@@ -23,13 +25,11 @@ public partial class OnlineShopContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
- 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Category>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__Categori__3213E83F0F6CC259");
-
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Nombre)
                 .HasMaxLength(100)
@@ -39,8 +39,8 @@ public partial class OnlineShopContext : DbContext
 
         modelBuilder.Entity<Order>(entity =>
         {
+            entity.HasKey(e => e.Id).HasName("PK__Orders__3213E83F4E6DBBF6");
             entity.HasKey(e => e.Id).HasName("PK__Orders__3213E83F72390CE5");
-
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.ClientId).HasColumnName("client_id");
             entity.Property(e => e.EstadoPedido)
@@ -58,7 +58,6 @@ public partial class OnlineShopContext : DbContext
         modelBuilder.Entity<OrderDetail>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__OrderDet__3213E83F93721C5D");
-
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Cantidad).HasColumnName("cantidad");
             entity.Property(e => e.OrderId).HasColumnName("order_id");
@@ -81,7 +80,6 @@ public partial class OnlineShopContext : DbContext
         modelBuilder.Entity<Product>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__Products__3213E83F69CAFDF5");
-
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.CategoriaId).HasColumnName("categoria_id");
             entity.Property(e => e.Descripcion)
@@ -109,7 +107,6 @@ public partial class OnlineShopContext : DbContext
         modelBuilder.Entity<User>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__Users__3213E83FF6058C2D");
-
             entity.HasIndex(e => e.Userrole, "UQ__Users__2A586E0B39B0322E").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("id");
@@ -121,10 +118,6 @@ public partial class OnlineShopContext : DbContext
                 .HasMaxLength(255)
                 .IsUnicode(false)
                 .HasColumnName("userpassword");
-            entity.Property(e => e.Userrole)
-                .HasMaxLength(100)
-                .IsUnicode(false)
-                .HasColumnName("userrole");
         });
 
         OnModelCreatingPartial(modelBuilder);
