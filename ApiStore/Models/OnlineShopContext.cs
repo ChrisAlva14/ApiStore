@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace ApiStore.Models;
 
@@ -23,18 +25,12 @@ public partial class OnlineShopContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
-
-    //para que la base de datos no se conecte a este lugar
-
-//    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-//        => optionsBuilder.UseSqlServer("Server=DESKTOP-NN6IMKU\\SQLEXPRESS; Database=OnlineShop; User Id=cp; Password=cp; Encrypt=False; TrustServerCertificate=False;");
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Category>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Categori__3213E83F1AD15F4E");
+
+            entity.HasKey(e => e.Id).HasName("PK__Categori__3213E83F0F6CC259");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Nombre)
@@ -45,7 +41,8 @@ public partial class OnlineShopContext : DbContext
 
         modelBuilder.Entity<Order>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Orders__3213E83F7F988059");
+
+            entity.HasKey(e => e.Id).HasName("PK__Orders__3213E83F72390CE5");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.ClientId).HasColumnName("client_id");
@@ -63,8 +60,8 @@ public partial class OnlineShopContext : DbContext
 
         modelBuilder.Entity<OrderDetail>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__OrderDet__3213E83FE59D63A5");
 
+            entity.HasKey(e => e.Id).HasName("PK__OrderDet__3213E83F93721C5D");
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Cantidad).HasColumnName("cantidad");
             entity.Property(e => e.OrderId).HasColumnName("order_id");
@@ -86,7 +83,9 @@ public partial class OnlineShopContext : DbContext
 
         modelBuilder.Entity<Product>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Products__3213E83F34714A96");
+
+
+            entity.HasKey(e => e.Id).HasName("PK__Products__3213E83F69CAFDF5");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.CategoriaId).HasColumnName("categoria_id");
@@ -114,23 +113,29 @@ public partial class OnlineShopContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Users__3213E83FA19ED45D");
 
-            entity.HasIndex(e => e.Username, "UQ__Users__F3DBC572E8B923A8").IsUnique();
+
+            entity.HasKey(e => e.Id).HasName("PK__Users__3213E83FF6058C2D");
+
+            entity.HasIndex(e => e.Userrole, "UQ__Users__2A586E0B39B0322E").IsUnique();
+
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Username)
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("username");
-            entity.Property(e => e.Userole)
-                .HasMaxLength(100)
-                .IsUnicode(false)
-                .HasColumnName("userole");
+
             entity.Property(e => e.Userpassword)
                 .HasMaxLength(255)
                 .IsUnicode(false)
                 .HasColumnName("userpassword");
+
+            entity.Property(e => e.Userrole)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("userrole");
+
         });
 
         OnModelCreatingPartial(modelBuilder);
