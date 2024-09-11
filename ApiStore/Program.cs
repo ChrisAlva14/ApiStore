@@ -15,7 +15,6 @@ builder.Services.AddDbContext<OnlineShopContext>(o =>
 
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

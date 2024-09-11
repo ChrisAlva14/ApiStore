@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 namespace ApiStore.Models;
 
-
 public partial class User
 {
     public int Id { get; set; }
