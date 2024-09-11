@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,16 +25,11 @@ public partial class OnlineShopContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=Ernesto; Database=OnlineShop; User Id=sa; Password=Payfone1997; Encrypt=False;   TrustServerCertificate=False;");
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Category>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Categori__3213E83F15AF1FAA");
-
+            entity.HasKey(e => e.Id).HasName("PK__Categori__3213E83F0F6CC259");
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Nombre)
                 .HasMaxLength(100)
@@ -44,7 +39,7 @@ public partial class OnlineShopContext : DbContext
 
         modelBuilder.Entity<Order>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Orders__3213E83FF0FE401D");
+            entity.HasKey(e => e.Id).HasName("PK__Orders__3213E83F72390CE5");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.ClientId).HasColumnName("client_id");
@@ -57,12 +52,13 @@ public partial class OnlineShopContext : DbContext
             entity.HasOne(d => d.Client).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.ClientId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Orders__client_i__3F466844");
+                .HasConstraintName("FK__Orders__client_i__5165187F");
         });
 
         modelBuilder.Entity<OrderDetail>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__OrderDet__3213E83F93F324D3");
+
+            entity.HasKey(e => e.Id).HasName("PK__OrderDet__3213E83F93721C5D");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Cantidad).HasColumnName("cantidad");
@@ -75,17 +71,19 @@ public partial class OnlineShopContext : DbContext
             entity.HasOne(d => d.Order).WithMany(p => p.OrderDetails)
                 .HasForeignKey(d => d.OrderId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__OrderDeta__order__4222D4EF");
+                .HasConstraintName("FK__OrderDeta__order__5441852A");
+
 
             entity.HasOne(d => d.Product).WithMany(p => p.OrderDetails)
                 .HasForeignKey(d => d.ProductId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__OrderDeta__produ__4316F928");
+                .HasConstraintName("FK__OrderDeta__produ__5535A963");
         });
 
         modelBuilder.Entity<Product>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Products__3213E83F2282957A");
+
+            entity.HasKey(e => e.Id).HasName("PK__Products__3213E83F69CAFDF5");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.CategoriaId).HasColumnName("categoria_id");
@@ -108,28 +106,33 @@ public partial class OnlineShopContext : DbContext
             entity.HasOne(d => d.Categoria).WithMany(p => p.Products)
                 .HasForeignKey(d => d.CategoriaId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Products__catego__3C69FB99");
+                .HasConstraintName("FK__Products__catego__4E88ABD4");
+
         });
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Users__3213E83FB90F8E34");
 
-            entity.HasIndex(e => e.Username, "UQ__Users__F3DBC57210903D61").IsUnique();
+            entity.HasKey(e => e.Id).HasName("PK__Users__3213E83FF6058C2D");
+
+            entity.HasIndex(e => e.Userrole, "UQ__Users__2A586E0B39B0322E").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Username)
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("username");
-            entity.Property(e => e.Userole)
-                .HasMaxLength(100)
-                .IsUnicode(false)
-                .HasColumnName("userole");
+
             entity.Property(e => e.Userpassword)
                 .HasMaxLength(255)
                 .IsUnicode(false)
                 .HasColumnName("userpassword");
+
+            entity.Property(e => e.Userrole)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("userrole");
+
         });
 
         OnModelCreatingPartial(modelBuilder);
