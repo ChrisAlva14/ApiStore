@@ -1,19 +1,23 @@
-﻿using ApiStore.DTOs;
+using ApiStore.DTOs;
 using ApiStore.Models;
 using AutoMapper;
 
 namespace ApiStore.Mappings
-{
-    public class MappingProfile: Profile
+{       
+    public class MappingProfile : Profile
     {
-        public MappingProfile() { 
+        public MappingProfile()
+        { 
+            //Models -> DTO
+            CreateMap<Product, ProductResponse>();
+            CreateMap<Category, CategoryResponse>();
+             CreateMap<Order, OrderResponse>();
 
-            //Model -> DTO
-            CreateMap<Order, OrderResponse>();
-
-            //DTO -> Model
+            //DTO -> Models
+            CreateMap<ProductRequest, Product>();
+            CreateMap<CategoryRequest, Category>();
             CreateMap<OrderRequest, Order>();
-        
+
         }
     }
 }

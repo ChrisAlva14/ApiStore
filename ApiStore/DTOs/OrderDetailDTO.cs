@@ -1,6 +1,6 @@
 ﻿namespace ApiStore.DTOs
 {
-    public class Class
+    public class OrderDetailDTO
     {
     }
 }
