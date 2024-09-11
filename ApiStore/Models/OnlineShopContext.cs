@@ -29,7 +29,9 @@ public partial class OnlineShopContext : DbContext
     {
         modelBuilder.Entity<Category>(entity =>
         {
+
             entity.HasKey(e => e.Id).HasName("PK__Categori__3213E83F0F6CC259");
+
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Nombre)
                 .HasMaxLength(100)
@@ -39,6 +41,7 @@ public partial class OnlineShopContext : DbContext
 
         modelBuilder.Entity<Order>(entity =>
         {
+
             entity.HasKey(e => e.Id).HasName("PK__Orders__3213E83F72390CE5");
 
             entity.Property(e => e.Id).HasColumnName("id");
@@ -59,7 +62,6 @@ public partial class OnlineShopContext : DbContext
         {
 
             entity.HasKey(e => e.Id).HasName("PK__OrderDet__3213E83F93721C5D");
-
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Cantidad).HasColumnName("cantidad");
             entity.Property(e => e.OrderId).HasColumnName("order_id");
@@ -73,7 +75,6 @@ public partial class OnlineShopContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__OrderDeta__order__5441852A");
 
-
             entity.HasOne(d => d.Product).WithMany(p => p.OrderDetails)
                 .HasForeignKey(d => d.ProductId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -82,6 +83,7 @@ public partial class OnlineShopContext : DbContext
 
         modelBuilder.Entity<Product>(entity =>
         {
+
 
             entity.HasKey(e => e.Id).HasName("PK__Products__3213E83F69CAFDF5");
 
@@ -107,15 +109,16 @@ public partial class OnlineShopContext : DbContext
                 .HasForeignKey(d => d.CategoriaId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__Products__catego__4E88ABD4");
-
         });
 
         modelBuilder.Entity<User>(entity =>
         {
 
+
             entity.HasKey(e => e.Id).HasName("PK__Users__3213E83FF6058C2D");
 
             entity.HasIndex(e => e.Userrole, "UQ__Users__2A586E0B39B0322E").IsUnique();
+
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Username)
