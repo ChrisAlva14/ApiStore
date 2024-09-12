@@ -1,8 +1,13 @@
+<<<<<<< HEAD
 using ApiStore.DTOs;
+=======
+﻿using ApiStore.DTOs;
+>>>>>>> 5e183b8 (cambios servicios order detail)
 using ApiStore.Models;
 using AutoMapper;
 
 namespace ApiStore.Mappings
+<<<<<<< HEAD
 {       
     public class MappingProfile : Profile
     {
@@ -18,6 +23,19 @@ namespace ApiStore.Mappings
             CreateMap<CategoryRequest, Category>();
             CreateMap<OrderRequest, Order>();
 
+=======
+{
+    public class MappingProfile : Profile
+    {
+        public MappingProfile()
+        {
+            // Model -> DTO
+            CreateMap<OrderDetail, OrderDetailResponse >();
+
+            // DTO -> Model
+            CreateMap<OrderDetailRequest, OrderDetail>();
+           
+>>>>>>> 5e183b8 (cambios servicios order detail)
         }
     }
 }
