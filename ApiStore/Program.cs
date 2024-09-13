@@ -1,7 +1,13 @@
+
 using System.Reflection;
 using ApiStore.DTOs;
 using ApiStore.Models;
 using Microsoft.EntityFrameworkCore;
+
+using ApiStore.Models;
+using Microsoft.EntityFrameworkCore;
+using System.Reflection;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,9 +16,15 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
 builder.Services.AddDbContext<OnlineShopContext>(o =>
     o.UseSqlServer(builder.Configuration.GetConnectionString("OnlineShopConnection"))
 );
+
+builder.Services.AddDbContext<OnlineShopContext>(
+    o => o.UseSqlServer(builder.Configuration.GetConnectionString("OnlineShopConnection"))
+    );
+
 
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
@@ -110,5 +122,48 @@ app.MapDelete(
         return $"Eliminando categoria con el Id: {id}";
     }
 );
+
+/* ORDERDETAIL */
+
+app.MapGet(
+    "/api/orderDetails/",
+    () =>
+    {
+        return "Lista de detalle de ordenes";
+    }
+);
+
+app.MapGet(
+    "/api/orderDetails/{id}",
+    (int id) =>
+    {
+        return $"Buscando detalle de ordenes con el Id: {id}";
+    }
+);
+
+app.MapPost(
+    "/api/orderDetails/",
+    (OrderDetailRequest orderDetail) =>
+    {
+        return $"Guardando detalle de ordenes con el  Id: {orderDetail}";
+    }
+);
+
+app.MapPut(
+    "/api/orderDetails/{id}",
+    (int id, OrderDetailRequest orderDetail) =>
+    {
+        return $"Modificando detalle de ordenes con el Id: {id}";
+    }
+);
+
+app.MapDelete(
+    "/api/orderDetails/{id}",
+    (int id) =>
+    {
+        return $"Eliminando detalle de ordenes con el Id: {id}";
+    }
+);
+
 
 app.Run();
