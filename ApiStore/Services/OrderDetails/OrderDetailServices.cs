@@ -57,11 +57,14 @@ namespace ApiStore.Services.OrderDetails
             if (entity == null)
                 return -1;
 
-            entity.OrderDetailName = OrderDetail.OrderDetailName;
-            entity.OrderDetailPrice = product.ProductPrice;
-            entity.UserId = product.UserId;
+            entity.Precio = orderDetail.Precio;
+            entity.Order = orderDetail.Order;
+            entity.Product = orderDetail.Product;
+            entity.Cantidad = orderDetail.Cantidad;
+            entity.ProductId = orderDetail.ProductId;
+            entity.OrderId = orderDetail.OrderId;
 
-            _db.Products.Update(entity);
+            _db.OrderDetails.Update(entity);
 
             return await _db.SaveChangesAsync();
         }
