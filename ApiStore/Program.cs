@@ -1,7 +1,13 @@
+<<<<<<< HEAD
 using System.Reflection;
 using ApiStore.DTOs;
 using ApiStore.Models;
 using Microsoft.EntityFrameworkCore;
+=======
+using ApiStore.Models;
+using Microsoft.EntityFrameworkCore;
+using System.Reflection;
+>>>>>>> 5e183b8 (cambios servicios order detail)
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,9 +16,15 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+<<<<<<< HEAD
 builder.Services.AddDbContext<OnlineShopContext>(o =>
     o.UseSqlServer(builder.Configuration.GetConnectionString("OnlineShopConnection"))
 );
+=======
+builder.Services.AddDbContext<OnlineShopContext>(
+    o => o.UseSqlServer(builder.Configuration.GetConnectionString("OnlineShopConnection"))
+    );
+>>>>>>> 5e183b8 (cambios servicios order detail)
 
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
