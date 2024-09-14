@@ -56,7 +56,9 @@ namespace ApiStore.Services.Products
 
             await _context.Products.AddAsync(productRequest);
 
-            return await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
+
+            return productRequest.Id;
         }
 
         public async Task<int> PutProduct(int productId, ProductRequest product)
