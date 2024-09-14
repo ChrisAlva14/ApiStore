@@ -47,8 +47,8 @@ namespace ApiStore.Services.OrderDetails
         {
             var OrderDetailRequest = _mapper.Map<OrderDetailRequest, OrderDetail>(OrderDetail);
             await _db.OrderDetails.AddAsync(OrderDetailRequest);
-
-            return await _db.SaveChangesAsync();
+            await _db.SaveChangesAsync();
+            return OrderDetailRequest.Id;
         }
 
         public async Task<int> PutOrderDetail(int Id, OrderDetailRequest orderDetail)
