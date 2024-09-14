@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ApiStore.Services.orders
 {
-    public class OrderServices
+    public class OrderServices : IOrderServices
     {
         private readonly OnlineShopContext _context;
         private readonly IMapper _IMapper;
@@ -30,21 +30,15 @@ namespace ApiStore.Services.orders
             return await _context.SaveChangesAsync();
         }
 
-        public async Task<OrderResponse> GetOrder(int orderId)
-        {
-            var order = await _context.Orders.FindAsync(orderId);
-
-            var orderResponse = _IMapper.Map<Order, OrderResponse>(order);
-            return orderResponse;
-        }
-
         public async Task<int> PostOrder(OrderRequest orderRequest)
         {
             var order = _IMapper.Map<OrderRequest, Order>(orderRequest);
 
             await _context.Orders.AddAsync(order);
 
-            return await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
+
+            return order.Id;
         }
 
         public async Task<int> PutOrder(int orderId, OrderRequest orderRequest)
@@ -79,7 +73,21 @@ namespace ApiStore.Services.orders
             return orderList;
         }
 
+        public async Task<List<OrderResponse>> GetOrder()
+        {
+            var order = await _context.Orders.ToListAsync();
 
+            var orderResponse = _IMapper.Map<List<Order>, List<OrderResponse>>(order);
+            return orderResponse;
+        }
 
+        public async Task<OrderResponse> GetOrder(int orderId)
+        {
+            var order = await _context.Orders.FindAsync(orderId);
+
+            // Usa AutoMapper para mapear el producto a ProductResponse
+            var orderResponse = _IMapper.Map<Order, OrderResponse>(order);
+            return orderResponse;
+        }
     }
 }
