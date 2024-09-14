@@ -5,6 +5,9 @@
         public static void UseEndpoints(this WebApplication app)
         {
             OrderDetailEndpoints.Add(app);
+
+            OrderEndpoints.Add(app);
+
         }
     }
 }
