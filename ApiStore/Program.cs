@@ -1,5 +1,6 @@
 using ApiStore.Endponits;
 using ApiStore.Models;
+using ApiStore.Services.OrderDetails;
 using ApiStore.Services.orders;
 using ApiStore.Services.Products;
 using Microsoft.EntityFrameworkCore;
@@ -15,11 +16,13 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<OnlineShopContext>(
     o => o.UseSqlServer(builder.Configuration.GetConnectionString("OnlineShopConnection"))
-    );
+);
 
 
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
+builder.Services.AddScoped<IProductServices, ProductServices>();
+builder.Services.AddScoped<IOrderDetailServices, OrderDetailServices>();
 builder.Services.AddScoped<IOrderServices, OrderServices>();
 
 var app = builder.Build();
