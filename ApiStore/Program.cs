@@ -3,6 +3,7 @@ using ApiStore.Models;
 using ApiStore.Services.OrderDetails;
 using ApiStore.Services.orders;
 using ApiStore.Services.Products;
+using ApiStore.Services.Users;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -24,6 +25,7 @@ builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddScoped<IProductServices, ProductServices>();
 builder.Services.AddScoped<IOrderDetailServices, OrderDetailServices>();
 builder.Services.AddScoped<IOrderServices, OrderServices>();
+builder.Services.AddScoped<IUserServices, UserServices>();
 
 var app = builder.Build();
 

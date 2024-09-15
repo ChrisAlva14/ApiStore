@@ -13,12 +13,14 @@ namespace ApiStore.Mappings
             CreateMap<Category, CategoryResponse>();
             CreateMap<Order, OrderResponse>();
             CreateMap<OrderDetail, OrderDetailResponse>();
+            CreateMap<User, UserResponse>();
 
             // DTO -> Models
             CreateMap<ProductRequest, Product>();
             CreateMap<CategoryRequest, Category>();
             CreateMap<OrderRequest, Order>();
             CreateMap<OrderDetailRequest, OrderDetail>();
+            CreateMap<UserRequest, User>();
         }
     }
 }

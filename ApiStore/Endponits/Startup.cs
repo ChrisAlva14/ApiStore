@@ -6,9 +6,11 @@ namespace ApiStore.Endponits
     {
         public static void UseEndpoints(this WebApplication app)
         {
+            UserEndpoints.Add(app);
             OrderDetailEndpoints.Add(app);
             ProductEndpoints.Add(app);
             OrderEndpoints.Add(app);
+
         }
     }
 }
