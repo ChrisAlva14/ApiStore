@@ -10,6 +10,7 @@ namespace ApiStore.Endponits
             OrderDetailEndpoints.Add(app);
             ProductEndpoints.Add(app);
             OrderEndpoints.Add(app);
+            CategoryEndpoints.Add(app);
 
         }
     }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace ApiStore.Models;
+﻿namespace ApiStore.Models;
 
 public partial class Category
 {
