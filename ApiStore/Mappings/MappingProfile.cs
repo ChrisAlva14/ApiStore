@@ -14,6 +14,7 @@ namespace ApiStore.Mappings
             CreateMap<Order, OrderResponse>();
             CreateMap<OrderDetail, OrderDetailResponse>();
             CreateMap<User, UserResponse>();
+            CreateMap<Category, CategoryResponse>();
 
             // DTO -> Models
             CreateMap<ProductRequest, Product>();
@@ -21,6 +22,7 @@ namespace ApiStore.Mappings
             CreateMap<OrderRequest, Order>();
             CreateMap<OrderDetailRequest, OrderDetail>();
             CreateMap<UserRequest, User>();
+            CreateMap<CategoryResponse, Category>();
         }
     }
 }
