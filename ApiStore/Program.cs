@@ -1,3 +1,5 @@
+using System.Reflection;
+using System.Text;
 using ApiStore.Endponits;
 using ApiStore.Models;
 using ApiStore.Services.Categories;
@@ -5,9 +7,9 @@ using ApiStore.Services.OrderDetails;
 using ApiStore.Services.orders;
 using ApiStore.Services.Products;
 using ApiStore.Services.Users;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection;
-
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,10 +18,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<OnlineShopContext>(
-    o => o.UseSqlServer(builder.Configuration.GetConnectionString("OnlineShopConnection"))
+builder.Services.AddDbContext<OnlineShopContext>(o =>
+    o.UseSqlServer(builder.Configuration.GetConnectionString("OnlineShopConnection"))
 );
-
 
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
@@ -28,6 +29,32 @@ builder.Services.AddScoped<IOrderDetailServices, OrderDetailServices>();
 builder.Services.AddScoped<IOrderServices, OrderServices>();
 builder.Services.AddScoped<IUserServices, UserServices>();
 builder.Services.AddScoped<ICategoryServices, CategoryServices>();
+
+var jwtSettings = builder.Configuration.GetSection("JwtSetting");
+var secretKey = jwtSettings.GetValue<String>("SecretKey");
+
+builder.Services.AddAuthorization();
+builder
+    .Services.AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddJwtBearer(options =>
+    {
+        options.RequireHttpsMetadata = false;
+        options.SaveToken = true;
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateIssuerSigningKey = true,
+
+            ValidIssuer = jwtSettings.GetValue<String>("Issuer"),
+            ValidAudience = jwtSettings.GetValue<String>("Audience"),
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
+        };
+    });
 
 var app = builder.Build();
 
@@ -39,6 +66,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseEndpoints();
 

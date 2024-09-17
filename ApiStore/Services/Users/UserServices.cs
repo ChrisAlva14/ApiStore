@@ -48,6 +48,17 @@ namespace ApiStore.Services.Users
             return usersList;
         }
 
+        public async Task<UserResponse> Login(UserRequest user)
+        {
+            var userEntity = await _context.Users.FirstOrDefaultAsync(o =>
+                o.Username == user.Username && o.Userpassword == user.Userpassword
+            );
+
+            var userResponse = _IMapper.Map<User, UserResponse>(userEntity);
+
+            return userResponse;
+        }
+
         public async Task<int> PostUser(UserRequest user)
         {
             var userRequest = _IMapper.Map<UserRequest, User>(user);
