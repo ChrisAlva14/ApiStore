@@ -13,5 +13,7 @@ namespace ApiStore.Services.Users
         Task<int> PutUser(int UserId, UserRequest user);
 
         Task<int> DeleteUser(int userId);
+
+        Task<UserResponse> Login(UserRequest user); 
     }
 }
