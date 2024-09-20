@@ -20,7 +20,7 @@ namespace ApiStore.Endponits
             {
                 Summary = "Obtener Pedidos",
                 Description = "Muestra una lista de todos los pedidos."
-            });
+            }).RequireAuthorization();
 
             // Obtener un pedido por ID
             group.MapGet("/{id}", async (int id, IOrderServices orderServices) =>
@@ -35,7 +35,7 @@ namespace ApiStore.Endponits
             {
                 Summary = "Obtener Pedido por ID",
                 Description = "Busca un pedido por su ID."
-            });
+            }).RequireAuthorization();
 
             // Crear un nuevo pedido
             group.MapPost("/", async (OrderRequest order, IOrderServices orderServices) =>
@@ -50,7 +50,7 @@ namespace ApiStore.Endponits
             {
                 Summary = "Crear Pedido",
                 Description = "Crea un nuevo pedido."
-            });
+            }).RequireAuthorization();
 
             // Actualizar un pedido existente
             group.MapPut("/{id}", async (int id, OrderRequest order, IOrderServices orderServices) =>
@@ -65,7 +65,7 @@ namespace ApiStore.Endponits
             {
                 Summary = "Actualizar Pedido",
                 Description = "Actualiza un pedido existente."
-            });
+            }).RequireAuthorization();
 
             // Eliminar un pedido
             group.MapDelete("/{id}", async (int id, IOrderServices orderServices) =>
@@ -80,7 +80,7 @@ namespace ApiStore.Endponits
             {
                 Summary = "Eliminar Pedido",
                 Description = "Elimina un pedido existente."
-            });
+            }).RequireAuthorization();
         }
 
     }
