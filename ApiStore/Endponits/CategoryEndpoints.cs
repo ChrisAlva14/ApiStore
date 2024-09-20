@@ -23,7 +23,7 @@ namespace ApiStore.Endponits
                 {
                     Summary = "OBTENER CATEGORÍAS",
                     Description = "MUESTRA UNA LISTA DE TODOS LAS CATEGORÍAS",
-                });
+                }).RequireAuthorization();
 
             group
                 .MapGet(
@@ -38,7 +38,7 @@ namespace ApiStore.Endponits
                 {
                     Summary = "OBTENER UNA CATEGORÍA POR ID",
                     Description = "OBTIENE UNA CATEGORÍA DADO SU ID",
-                });
+                }).RequireAuthorization();
 
             group
                 .MapPost(
@@ -53,7 +53,7 @@ namespace ApiStore.Endponits
                 {
                     Summary = "CREAR UNA NUEVA CATEGORÍA",
                     Description = "CREA UNA NUEVA CATEGORÍA CON LOS DATOS PROPORCIONADOS",
-                });
+                }).RequireAuthorization();
 
             group
                 .MapPut(
@@ -72,7 +72,7 @@ namespace ApiStore.Endponits
                 {
                     Summary = "MODIFICAR UNA CATEGORÍA",
                     Description = "ACTUALIZA UNA CATEGORÍA DADO SU ID",
-                });
+                }).RequireAuthorization();
 
             group
                 .MapDelete(
@@ -90,7 +90,7 @@ namespace ApiStore.Endponits
                 {
                     Summary = "ELIMINAR UNA CATEGORÍA",
                     Description = "ELIMINAR UNA CATEGORÍA DADO SU ID",
-                });
+                }).RequireAuthorization();
         }
     }
 }
