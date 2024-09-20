@@ -1,6 +1,10 @@
 ﻿using ApiStore.DTOs;
 using ApiStore.Services.Users;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace ApiStore.Endponits
 {
@@ -96,6 +100,58 @@ namespace ApiStore.Endponits
                     Summary = "ELIMINAR UN USUARIO",
                     Description = "ELIMINAR UN USUARIO DADO SU ID",
                 });
+
+            group.MapPost("/login", async (UserRequest user, IUserServices userServices, IConfiguration config) =>
+
+            {
+                var login = await userServices.Login(user);
+
+
+                if (login is null)
+                    return Results.Unauthorized();//Retorna el estado 401:Unauthorized
+                else
+                {
+                    var jwtSettings = config.GetSection("JwtSetting");
+                    var secretKey = jwtSettings.GetValue<string>("SecretKey");
+                    var issuer = jwtSettings.GetValue<string>("Issuer");
+                    var audience = jwtSettings.GetValue<string>("Audience");
+
+                    var tokenHandler = new JwtSecurityTokenHandler();
+                    var key = Encoding.UTF8.GetBytes(secretKey);
+
+                    var tokenDescriptor = new SecurityTokenDescriptor
+                    {
+                        Subject = new ClaimsIdentity(new[] {
+                        new Claim(ClaimTypes.Name, user.Username),
+                        new Claim(ClaimTypes.Role,user.UserRole),
+
+                        }),
+
+                        Expires = DateTime.UtcNow.AddHours(1),
+                        Issuer = issuer,
+                        Audience = audience,
+                        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
+                        SecurityAlgorithms.HmacSha256Signature)
+
+                    };
+                    // Crear token, usando parametros definidos
+                    var token = tokenHandler.CreateToken(tokenDescriptor);
+                    // Convertir el token a una cadena
+                    var jwt = tokenHandler.WriteToken(token);
+
+                    return Results.Ok(jwt);
+                }
+            }).WithOpenApi(o => new OpenApiOperation(o)
+            {
+                Summary = "LOGIN USUARIO",
+                Description = "Generara token para inicio de sesion."
+            });
+
+        }
+
+        private static RequestDelegate async(UserRequest userRequest, object user, IUserServices userServices1, object userServices2, IConfiguration configuration, object config)
+        {
+            throw new NotImplementedException();
         }
     }
 }
