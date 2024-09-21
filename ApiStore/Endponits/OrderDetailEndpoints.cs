@@ -1,7 +1,5 @@
 ﻿using ApiStore.DTOs;
-using ApiStore.Models;
 using ApiStore.Services.OrderDetails;
-using ApiStore.Services.Products;
 using Microsoft.OpenApi.Models;
 
 namespace ApiStore.Endponits
@@ -12,7 +10,8 @@ namespace ApiStore.Endponits
         {
             var group = routes.MapGroup("/api/orderDetails").WithTags("orderDetails");
 
-            group.MapGet("/", async (IOrderDetailServices orderDetailServices) => {
+            group.MapGet("/", async (IOrderDetailServices orderDetailServices) =>
+            {
                 var orderDetails = await orderDetailServices.GetOrderDetails();
                 // 200 OK: La solicitud se realizó correctamente
                 // Y devuelve la lista de detalle de ordenes
@@ -24,7 +23,8 @@ namespace ApiStore.Endponits
                 Description = "Muestra una lista de todos los detalles de ordenes."
             }).RequireAuthorization();
 
-            group.MapGet("/{id}", async (int id, IOrderDetailServices OrderDetailServices) => {
+            group.MapGet("/{id}", async (int id, IOrderDetailServices OrderDetailServices) =>
+            {
                 var orderDetail = await OrderDetailServices.GetOrderDetail(id);
                 if (orderDetail == null)
                     return Results.NotFound(); // 404 Not Found: El recurso solicitado no existe
@@ -82,7 +82,7 @@ namespace ApiStore.Endponits
         }
     }
 }
-        
 
-       
+
+
 
