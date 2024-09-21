@@ -24,7 +24,7 @@ namespace ApiStore.Endpoints
                 {
                     Summary = "OBTENER PRODUCTOS",
                     Description = "MUESTRA UNA LISTA DE TODOS LOS PRODUCTOS",
-                });
+                }).RequireAuthorization();
 
             // GET product by ID
             group
@@ -40,7 +40,7 @@ namespace ApiStore.Endpoints
                 {
                     Summary = "OBTENER PRODUCTO POR ID",
                     Description = "OBTIENE UN PRODUCTO DADO SU ID",
-                });
+                }).RequireAuthorization();
 
             // POST create a new product
             group
@@ -56,7 +56,7 @@ namespace ApiStore.Endpoints
                 {
                     Summary = "CREAR NUEVO PRODUCTO",
                     Description = "CREA UN NUEVO PRODUCTO CON LOS DATOS PROPORCIONADOS",
-                });
+                }).RequireAuthorization();
 
             // PUT modified a new product
             group
@@ -76,7 +76,7 @@ namespace ApiStore.Endpoints
                 {
                     Summary = "MODIFICAR PRODUCTO",
                     Description = "ACTUALIZA UN PRODUCTO DADO SU ID",
-                });
+                }).RequireAuthorization();
 
             // DELETE product by ID
             group
@@ -95,7 +95,7 @@ namespace ApiStore.Endpoints
                 {
                     Summary = "ELIMINAR PRODUCTO",
                     Description = "ELIMINAR UN PRODUCTO DADO SU ID",
-                });
+                }).RequireAuthorization();
         }
     }
 }

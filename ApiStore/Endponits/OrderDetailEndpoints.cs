@@ -22,7 +22,7 @@ namespace ApiStore.Endponits
             {
                 Summary = "Obtener Detalle de Ordenes",
                 Description = "Muestra una lista de todos los detalles de ordenes."
-            });
+            }).RequireAuthorization();
 
             group.MapGet("/{id}", async (int id, IOrderDetailServices OrderDetailServices) => {
                 var orderDetail = await OrderDetailServices.GetOrderDetail(id);
@@ -35,7 +35,7 @@ namespace ApiStore.Endponits
             {
                 Summary = "Obtener Detalle de Ordenes",
                 Description = "Busca un detalle de ordenes por id."
-            });
+            }).RequireAuthorization();
 
             group.MapPost("/", async (OrderDetailRequest orderDetail, IOrderDetailServices orderDetailServices) =>
             {
@@ -49,7 +49,7 @@ namespace ApiStore.Endponits
             {
                 Summary = "Crear Detalle de Ordenes",
                 Description = "Crear un nuevo detalle de ordenes."
-            });
+            }).RequireAuthorization();
 
 
             group.MapPut("/{id}", async (int id, OrderDetailRequest orderDetail, IOrderDetailServices orderDetailServices) =>
@@ -64,7 +64,7 @@ namespace ApiStore.Endponits
             {
                 Summary = "Modificar Detalle de Ordenes",
                 Description = "Actualiza un detalle de ordenes existente."
-            });
+            }).RequireAuthorization();
 
             group.MapDelete("/{id}", async (int id, IOrderDetailServices orderDetailServices) =>
             {
@@ -78,11 +78,9 @@ namespace ApiStore.Endponits
             {
                 Summary = "Eliminar Detalle de Ordenes",
                 Description = "Eliminar detalle de ordenes existente."
-            });
+            }).RequireAuthorization();
         }
     }
-
-
 }
         
 

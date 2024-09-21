@@ -18,7 +18,7 @@ namespace ApiStore.DTOs
     }
     public class OrderRequest
     {
-        public int Id { get; set; }
+        //public int Id { get; set; }
 
         public DateOnly FechaPedido { get; set; }
 

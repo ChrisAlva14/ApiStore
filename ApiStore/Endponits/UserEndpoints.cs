@@ -1,5 +1,9 @@
-﻿using ApiStore.DTOs;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using ApiStore.DTOs;
 using ApiStore.Services.Users;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 namespace ApiStore.Endponits
@@ -24,7 +28,7 @@ namespace ApiStore.Endponits
                 {
                     Summary = "OBTENER USUARIOS",
                     Description = "MUESTRA UNA LISTA DE TODOS LOS USUARIOS",
-                });
+                }).RequireAuthorization();
 
             // GET user by ID
             group
@@ -40,7 +44,7 @@ namespace ApiStore.Endponits
                 {
                     Summary = "OBTENER UN USUARIO POR ID",
                     Description = "OBTIENE UN USUARIO DADO SU ID",
-                });
+                }).RequireAuthorization();
 
             // POST create a new user
             group
@@ -76,7 +80,7 @@ namespace ApiStore.Endponits
                 {
                     Summary = "MODIFICAR UN USUARIO",
                     Description = "ACTUALIZA UN USUARIO DADO SU ID",
-                });
+                }).RequireAuthorization();
 
             // DELETE product by ID
             group
@@ -95,6 +99,60 @@ namespace ApiStore.Endponits
                 {
                     Summary = "ELIMINAR UN USUARIO",
                     Description = "ELIMINAR UN USUARIO DADO SU ID",
+                }).RequireAuthorization();
+
+            group
+                .MapPost(
+                    "/login",
+                    async (UserRequest user, IUserServices userServices, IConfiguration config) =>
+                    {
+                        var login = await userServices.Login(user);
+
+                        if (login is null)
+                        {
+                            return Results.Unauthorized();
+                        }
+                        else
+                        {
+                            var jwtSettings = config.GetSection("JwtSetting");
+                            var secretKey = jwtSettings.GetValue<String>("SecretKey");
+                            var issuer = jwtSettings.GetValue<String>("Issuer");
+                            var audience = jwtSettings.GetValue<String>("Audience");
+
+                            var tokenHandler = new JwtSecurityTokenHandler();
+                            var key = Encoding.UTF8.GetBytes(secretKey);
+
+                            var tokenDescriptor = new SecurityTokenDescriptor
+                            {
+                                Subject = new ClaimsIdentity(
+                                    new[]
+                                    {
+                                        new Claim(ClaimTypes.Name, user.Username),
+                                        new Claim(ClaimTypes.Role, user.UserRole),
+                                    }
+                                ),
+                                Expires = DateTime.UtcNow.AddHours(1),
+                                Issuer = issuer,
+                                Audience = audience,
+                                SigningCredentials = new SigningCredentials(
+                                    new SymmetricSecurityKey(key),
+                                    SecurityAlgorithms.HmacSha256Signature
+                                ),
+                            };
+
+                            //CREAR TOKEN
+                            var token = tokenHandler.CreateToken(tokenDescriptor);
+
+                            var jwt = tokenHandler.WriteToken(token);
+
+                            return Results.Ok(jwt);
+                        }
+                    }
+                )
+                .WithOpenApi(o => new OpenApiOperation(o)
+                {
+                    Summary = "LOGIN USUARIO",
+                    Description = "GENERARÁ EL TOKEN PARA INICIO DE SESIÓN.",
                 });
         }
     }
