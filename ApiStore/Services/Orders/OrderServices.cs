@@ -53,7 +53,8 @@ namespace ApiStore.Services.orders
 
             // Actualizar la orden con los nuevos valores
             order.EstadoPedido = orderRequest.EstadoPedido;
-            order.FechaPedido = orderRequest.FechaPedido; // Actualizar otros campos relevantes
+            order.FechaPedido = orderRequest.FechaPedido;
+
 
             // Actualizar la orden en el contexto
             _context.Orders.Update(order);

@@ -42,17 +42,17 @@ public partial class OnlineShopContext : DbContext
             entity.HasKey(e => e.Id).HasName("PK__Orders__3213E83F4E6DBBF6");
             entity.HasKey(e => e.Id).HasName("PK__Orders__3213E83F72390CE5");
             entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.ClientId).HasColumnName("client_id");
+            entity.Property(e => e.UserId).HasColumnName("users_id");
             entity.Property(e => e.EstadoPedido)
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("estado_pedido");
             entity.Property(e => e.FechaPedido).HasColumnName("fecha_pedido");
 
-            entity.HasOne(d => d.Client).WithMany(p => p.Orders)
-                .HasForeignKey(d => d.ClientId)
+            entity.HasOne(d => d.User).WithMany(p => p.Orders)
+                .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Orders__client_i__5165187F");
+                .HasConstraintName("FK__Orders__users_i__5165187F");
         });
 
         modelBuilder.Entity<OrderDetail>(entity =>

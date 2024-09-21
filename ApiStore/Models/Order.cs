@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace ApiStore.Models;
+﻿namespace ApiStore.Models;
 
 public partial class Order
 {
@@ -11,9 +8,9 @@ public partial class Order
 
     public string EstadoPedido { get; set; } = null!;
 
-    public int ClientId { get; set; }
+    public int UserId { get; set; }
 
-    public virtual User Client { get; set; } = null!;
+    public virtual User User { get; set; } = null!;
 
     public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
 }
