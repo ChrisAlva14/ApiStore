@@ -10,7 +10,7 @@ public partial class Order
 
     public int UserId { get; set; }
 
-    public virtual User User { get; set; } = null!;
+    public virtual User User { get; set; } = null!;//
 
-    public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
+    public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();//
 }
