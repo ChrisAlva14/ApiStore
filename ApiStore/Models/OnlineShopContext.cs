@@ -39,7 +39,7 @@ public partial class OnlineShopContext : DbContext
 
         modelBuilder.Entity<Order>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Orders__3213E83F4E6DBBF6");
+            
             entity.HasKey(e => e.Id).HasName("PK__Orders__3213E83F72390CE5");
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.UserId).HasColumnName("users_id");
