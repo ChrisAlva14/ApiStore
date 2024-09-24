@@ -30,8 +30,8 @@ namespace ApiStore.DTOs
 
         public decimal Precio { get; set; }
 
-        public virtual Order Order { get; set; } = null!;
+        //public virtual Order Order { get; set; } = null!;
 
-        public virtual Product Product { get; set; } = null!;
+        //public virtual Product Product { get; set; } = null!;
     }
 }
