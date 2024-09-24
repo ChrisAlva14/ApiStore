@@ -44,7 +44,7 @@ namespace ApiStore.Endponits
 
                 var id = await orderDetailServices.PostOrderDetail(orderDetail);
                 // 201 Created: El recurso se creó con éxito, se devuelve la ubicación del recurso creado
-                return Results.Created($"/api/orderDetails/Id", orderDetail);
+                return Results.Created($"/api/orderDetails/Id", id);
             }).WithOpenApi(o => new OpenApiOperation(o)
             {
                 Summary = "Crear Detalle de Ordenes",

@@ -58,8 +58,8 @@ namespace ApiStore.Services.OrderDetails
                 return -1;
 
             entity.Precio = orderDetail.Precio;
-            entity.Order = orderDetail.Order;
-            entity.Product = orderDetail.Product;
+            //entity.Order = orderDetail.Order;
+            //entity.Product = orderDetail.Product;
             entity.Cantidad = orderDetail.Cantidad;
             entity.ProductId = orderDetail.ProductId;
             entity.OrderId = orderDetail.OrderId;
