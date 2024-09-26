@@ -127,8 +127,8 @@ namespace ApiStore.Endponits
                                 Subject = new ClaimsIdentity(
                                     new[]
                                     {
-                                        new Claim(ClaimTypes.Name, user.Username),
-                                        new Claim(ClaimTypes.Role, user.UserRole),
+                                        new Claim(ClaimTypes.Name, login.Username),
+                                        new Claim(ClaimTypes.Role, login.UserRole),
                                     }
                                 ),
                                 Expires = DateTime.UtcNow.AddHours(1),
